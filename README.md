@@ -12,3 +12,4 @@ python3 ok  (--local)
 
 If you don't have a UCB account, please add --local to perform the test.
 
+Please don't hesitate to contact me via chooseyourtask@gmail.com if you have any questions about how to use the course material.
