@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<!-- saved from url=(0071)https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/analytics.js" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app202.us.archive.org';v.server_ms=342;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/bundle-playback.js" charset="utf-8"></script>
+<script type="text/javascript" src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/wombat.js" charset="utf-8"></script>
+<script>window.RufflePlayer=window.RufflePlayer||{};window.RufflePlayer.config={"autoplay":"on","unmuteOverlay":"hidden"};</script>
+<script type="text/javascript" src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/ruffle.js"></script>
+<script type="text/javascript">
+    __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://cs61a.org/lab/lab01/","20240301065838","https://web.archive.org/","web","https://web-static.archive.org/_static/",
+	      "1709276318");
+</script>
+<link rel="stylesheet" type="text/css" href="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/banner-styles.css">
+<link rel="stylesheet" type="text/css" href="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/iconochive.css">
+<!-- End Wayback Rewrite JS Include -->
+
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/jquery.min.js"></script>
+    <script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/bootstrap.min.js"></script>
+    <script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/hl.js"></script>
+    <script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/dark-mode.js"></script>
+    <link rel="stylesheet" href="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/css">
+    <link rel="stylesheet" href="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/style.css">
+    <link rel="stylesheet" href="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/mono-blue.css">
+    <link rel="icon" href="https://web.archive.org/web/20240301065838im_/https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 1: Functions, Control | CS 61A Spring 2024
+</title>
+  </head>
+
+  <body id="index" class="home"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display: block; direction: ltr;"><template shadowrootmode="closed"><div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20240301065838/https%3A//cs61a.org/lab/lab01/" scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
+  </div>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="https://web.archive.org/web/" title="Wayback Machine home page"><img src="https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-100.png, https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0"></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="https://web.archive.org/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://cs61a.org/lab/lab01/" onfocus="this.focus();this.select();" style="flex:1;" autocomplete="off"><input type="hidden" name="type" value="replay"><input type="hidden" name="date" value="20240301065838"><input type="submit" value="Go">
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+                <div class="s" id="wm-nav-captures" style="flex:1;"><a class="t" href="https://web.archive.org/web/*/https://cs61a.org/lab/lab01/" title="See a list of every capture for this URL">135 captures</a><div class="r" title="Timespan for captures of this URL">21 Oct 2014 - 7 Jul 2024</div></div>
+        <div class="k">
+          <a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/" id="wm-graph-anchor">
+            <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+              <canvas id="wm-sparkline-canvas" width="725" height="27" border="0"></canvas>
+            <div class="yt" style="display: none; width: 25px; height: 27px;"></div><div class="mt" style="display: none; width: 2px; height: 27px;"></div></div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+        <tbody>
+          <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+          <tr class="m">
+            <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20231128200544/https://cs61a.org/lab/lab01/" title="28 Nov 2023"><strong>Nov</strong></a></td>
+            <td class="c" id="displayMonthEl" title="You are here: 06:58:38 Mar 01, 2024">MAR</td>
+            <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20240411124026/https://cs61a.org/lab/lab01/" title="11 Apr 2024"><strong>Apr</strong></a></td>
+          </tr>
+          <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+          <tr class="d">
+            <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20231128200544/https://cs61a.org/lab/lab01/" title="20:05:44 Nov 28, 2023"><img src="https://web-static.archive.org/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0"></a></td>
+            <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 06:58:38 Mar 01, 2024">01</td>
+            <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20240411124026/https://cs61a.org/lab/lab01/" title="12:40:26 Apr 11, 2024"><img src="https://web-static.archive.org/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0"></a></td>
+          </tr>
+          <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+          <tr class="y">
+            <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20230130115654/https://cs61a.org/lab/lab01/" title="30 Jan 2023"><strong>2023</strong></a></td>
+            <td class="c" id="displayYearEl" title="You are here: 06:58:38 Mar 01, 2024">2024</td>
+            <td class="f" nowrap="nowrap">2025</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+                <span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#" title="Share via My Web Archive" style="display: none;">
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in" style="display: inline-block;">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web" style="display: none;"></span>
+        </span>
+                <a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+        <a id="wm-tb-close" href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="https://web.archive.org/web/20240301065838/http://web.archive.org/screenshot/https://cs61a.org/lab/lab01/" id="wm-screenshot" title="screenshot" style="visibility: hidden;">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+        <a id="wm-share-facebook" href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#" data-url="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+        <a id="wm-share-twitter" href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#" data-url="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+        <a id="wm-expand" class="wm-btn wm-closed" href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
+      </div>
+    </div>
+  </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+        <div id="wm-capinfo-notice" source="api"></div>
+                <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/save-page-now-outlinks)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/save-page-now-outlinks" target="_new"><span class="wm-title">Save Page Now Outlinks</span></a></div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="https://web-static.archive.org/_static/images/loading.gif" alt="loading"></div>
+    </div>
+    </div>
+  </div></div></div><link rel="stylesheet" type="text/css" href="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/banner-styles.css"><link rel="stylesheet" type="text/css" href="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/iconochive.css"><div class="wb-autocomplete-suggestions "></div></template>
+</div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(725,27,25,2,"web","https://cs61a.org/lab/lab01/","20240301065838",1996,"https://web-static.archive.org/_static/",["https://web-static.archive.org/_static/css/banner-styles.css?v=S1zqJCYt","https://web-static.archive.org/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+ 
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://web.archive.org/web/20240301065838/https://cs61a.org/">
+            <img style="max-width:60px; margin-top: -20px;" class="logo" src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/logo.png">
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/">Home</a></li>
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/articles/about">Syllabus</a></li>
+            <li><a href="https://web.archive.org/web/20240301065838/https://edstem.org/us/courses/52971/discussion/" target="_blank">Ed</a></li>
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/office-hours">Office Hours</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/staff">TAs &amp; Tutors</a></li>
+                <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/academic-interns">Academic Interns</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a href="https://web.archive.org/web/20240301065838/https://sections.cs61a.org/">Section Selector</a></li>
+                <li><a href="https://web.archive.org/web/20240301065838/https://oh.cs61a.org/">Office Hours Queue</a></li>
+                <li><a href="https://web.archive.org/web/20240301065838/https://go.cs61a.org/extensions">Request an Extension</a></li>
+                <li><a href="https://web.archive.org/web/20240301065838/https://go.cs61a.org/regrades">Request a Regrade</a></li>
+                <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/resources/">Past Exams &amp; Sites</a></li>
+                <li><a href="https://web.archive.org/web/20240301065838/https://tutor.cs61a.org/">Python Tutor</a></li>
+                <li><a href="https://web.archive.org/web/20240301065838/https://code.cs61a.org/">Online Code Editor</a></li>
+                <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/articles/campus-res/">Department/Campus Resources</a></li>
+              </ul>
+            </li>
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/contact/">Contact</a></li>
+            <li>
+              <label class="switch">
+                <input type="checkbox" id="toggle-mode-cb">
+                <span class="slider round"></span>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Lab 1: Functions, Control
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/lab01.zip" class="label label-outline">lab01.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due by 11:59pm on Wednesday, January 24.</i></p>
+
+
+
+
+
+
+<h2 id="starter-files">Starter Files</h2>
+
+<p>Download <a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/lab01.zip">lab01.zip</a>.
+Inside the archive, you will find starter files for the questions in this lab,
+  along with a copy of the <a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/ok">Ok</a> autograder.</p>
+
+
+
+
+
+
+
+
+    
+<!--
+NOTE: to update the survey for each new semester you should duplicate the form
+from last semester and go to links.cs61a.org to make a new shortlink
+-->
+
+
+<h1 id="required-questions">Required Questions</h1>
+
+
+<br>
+
+        <button id="toggle-1" class="btn btn-outline btn-lg alwaystoggle toggle" style="display: inline-block;">
+        Getting Started Videos<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+<h2 id="getting-started-videos" class="no-toc">Getting Started Videos</h2>
+
+
+<p>These videos may provide some helpful direction for tackling the coding
+problems on this assignment.</p>
+
+<blockquote><p>To see these videos, you should be logged into your berkeley.edu email.</p></blockquote>
+
+
+            <iframe width="560" height="315" src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/videoseries.html" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" data-ruffle-polyfilled=""></iframe><p><a href="https://web.archive.org/web/20240301065838/https://youtu.be/playlist?list=PLx38hZJ5RLZdIweNNPm4tZYMrVXd76H_l"> YouTube link </a></p>
+</div>
+
+
+<h2 id="review">Review</h2>
+
+
+
+        <button id="toggle-2" class="btn btn-outline btn-lg alwaystoggle toggle" style="display: inline-block;">
+        Using Python<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+Here are the most common ways to run Python on a file.
+
+<ol>
+  <li><p>Using no command-line options will run the code in the file you provide and
+  return you to the command line. If your file just contains function
+  definitions, you'll see no output unless there is a syntax error.</p>
+
+<pre><code class="hljs">python3 lab00.py</code></pre></li>
+  <li><p><strong><code>-i</code></strong>: The <code>-i</code> option runs the code in the file you provide, then opens
+  an interactive session (with a <code>&gt;&gt;&gt;</code> prompt). You can then evaluate
+  expressions, for example calling functions you defined. To exit, type
+  <code>exit()</code>. You can also use the keyboard shortcut <code>Ctrl-D</code> on Linux/Mac
+  machines or <code>Ctrl-Z  Enter</code> on Windows.</p>
+
+  <p>If you edit the Python file while running it interactively, you will need to
+  exit and restart the interpreter in order for those changes to take effect.</p>
+
+  <p>Here's how we can run <code>lab00.py</code> interactively:</p>
+
+<pre><code class="hljs">python3 -i lab00.py</code></pre></li>
+  <li><p><strong><code>-m doctest</code></strong>: Runs the doctests in a file, which are the examples in
+  the docstrings of functions.</p>
+
+  <p>Each test in the file consists of <code>&gt;&gt;&gt;</code> followed by some Python code and
+  the expected output.</p>
+
+  <p>Here's how we can run the doctests in <code>lab00.py</code>:</p>
+
+<pre><code class="hljs"> python3 -m doctest lab00.py</code></pre>
+
+  <p>When our code passes all of the doctests, no output is displayed. Otherwise,
+  information about the tests that failed will be displayed.
+  </p></li></ol></div>
+  <br><p></p>
+
+
+
+        <button id="toggle-3" class="btn btn-outline btn-lg alwaystoggle toggle" style="display: inline-block;">
+        Using OK<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-3">
+In 61A, we use a program called OK for autograding labs, homeworks, and
+projects.
+
+<p>To use Ok to test a function, run the following command (replacing <code>FUNCTION</code> with the name of the function):</p>
+
+<pre><code class="hljs">python3 ok -q FUNCTION</code></pre>
+
+<p>If your function contains a call to <code>print</code> that starts with <code>"DEBUG:"</code>, then this line will be ignored by OK. (Otherwise, including extra <code>print</code> calls can cause tests to fail because of the additional output displayed.)</p>
+
+<pre><code class="hljs python">print(<span class="hljs-string">"DEBUG:"</span>, x)</code></pre>
+
+<p>There are more features described on the <a href="https://web.archive.org/web/20240301065838/https://cs61a.org/articles/using-ok">Using OK page</a>.
+<strong>You can quickly generate most ok commands at <a href="https://web.archive.org/web/20240301065838/https://go.cs61a.org/ok-help">ok-help</a>.</strong>
+</p></div>
+<br><p></p>
+
+
+        <button id="toggle-4" class="btn btn-outline btn-lg alwaystoggle toggle" style="display: inline-block;">
+        Division, Floor Div, and Modulo<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-4">
+Here are examples of the division-related operators in Python 3:
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+      <tbody><tr>
+        <th>True Division: <code>/</code> <br> (decimal division) </th>
+        <th>Floor Division: <code>//</code> <br> (integer division) </th>
+        <th>Modulo: <code>%</code> <br> (remainder) </th>
+
+  </tr>
+  <tr>
+    <td align="left">
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">1</span> / <span class="hljs-number">5</span>
+<span class="hljs-number">0.2</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">25</span> / <span class="hljs-number">4</span>
+<span class="hljs-number">6.25</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">4</span> / <span class="hljs-number">2</span>
+<span class="hljs-number">2.0</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">5</span> / <span class="hljs-number">0</span>
+ZeroDivisionError
+</code></pre>
+    </td>
+    <td align="left">
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">1</span> // <span class="hljs-number">5</span> <span class="hljs-comment"># truncate result of true division</span>
+<span class="hljs-number">0</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">25</span> // <span class="hljs-number">4</span>
+<span class="hljs-number">6</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">4</span> // <span class="hljs-number">2</span>
+<span class="hljs-number">2</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">5</span> // <span class="hljs-number">0</span>
+ZeroDivisionError
+</code></pre>
+    </td>
+    <td align="left">
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">1</span> % <span class="hljs-number">5</span>
+<span class="hljs-number">1</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">25</span> % <span class="hljs-number">4</span>
+<span class="hljs-number">1</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">4</span> % <span class="hljs-number">2</span>
+<span class="hljs-number">0</span>
+
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">5</span> % <span class="hljs-number">0</span>
+ZeroDivisionError
+</code></pre>
+    </td>
+  </tr>
+</tbody></table>
+</div>
+
+<p>A <code>ZeroDivisionError</code> occurs when dividing by 0.</p>
+
+<p>One useful technique involving the <code>%</code> operator is to check
+whether a number <code>x</code> is divisible by another number <code>y</code>:</p>
+
+<pre><code class="hljs">x % y == 0</code></pre>
+
+<p>For example, in order to check if <code>x</code> is an even number: <code>x % 2 == 0</code>
+</p></div>
+<br><p></p>
+
+
+        <button id="toggle-5" class="btn btn-outline btn-lg alwaystoggle toggle" style="display: inline-block;">
+        Return and Print<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-5">
+Most functions that you define will contain a <code>return</code> statement that provides
+the value of the call expression used to call the function.
+
+<p>When Python executes a <code>return</code> statement, the function call terminates
+immediately.  If Python reaches the end of the function body without executing
+a <code>return</code> statement, the function returns <code>None</code>.</p>
+
+<p>In contrast, the <code>print</code> function is used to display values.
+Unlike a <code>return</code> statement, when Python evaluates a call to <code>print</code>, the
+function does <em>not</em> terminate immediately.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">what_prints</span><span class="hljs-params">()</span>:</span>
+    print(<span class="hljs-string">'Hello World!'</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'Exiting this function.'</span>
+    print(<span class="hljs-string">'61A is awesome!'</span>)
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>what_prints()
+Hello World!
+<span class="hljs-string">'Exiting this function.'</span></code></pre>
+
+<blockquote><p>Notice also that <code>print</code> will display text <strong>without the quotes</strong>, but
+<code>return</code> will preserve the quotes.
+</p></blockquote></div><p></p>
+
+
+<h2 id="what-would-python-display-wwpd">What Would Python Display? (WWPD)</h2>
+
+
+
+<h3 id="q1-wwpd-control">Q1: WWPD: Control</h3>
+
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?" questions:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q control -u</code><button id="copy-code-python3ok-qcontrol-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qcontrol-u").onclick = () => copyCode('python3 ok -q control -u', "copy-code-python3ok-qcontrol-u");
+        </script>
+        <br></blockquote>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">xk</span><span class="hljs-params">(c, d)</span>:</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> c == <span class="hljs-number">4</span>:
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> <span class="hljs-number">6</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">elif</span> d &gt;= <span class="hljs-number">4</span>:
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> <span class="hljs-number">6</span> + <span class="hljs-number">7</span> + c
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">else</span>:
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> <span class="hljs-number">25</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>xk(<span class="hljs-number">10</span>, <span class="hljs-number">10</span>)
+<div class="alt prompt-1">______</div><div class="solution prompt-1">23</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>xk(<span class="hljs-number">10</span>, <span class="hljs-number">6</span>)
+<div class="alt prompt-1">______</div><div class="solution prompt-1">23</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>xk(<span class="hljs-number">4</span>, <span class="hljs-number">6</span>)
+<div class="alt prompt-1">______</div><div class="solution prompt-1">6</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>xk(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)
+<div class="alt prompt-1">______</div><div class="solution prompt-1">25</div></code></pre>
+        <button id="prompt-1" class="btn btn-outline btn-lg solutiontoggle prompt">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">how_big</span><span class="hljs-params">(x)</span>:</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">10</span>:
+<span class="hljs-meta">... </span>        print(<span class="hljs-string">'huge'</span>)
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">elif</span> x &gt; <span class="hljs-number">5</span>:
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> <span class="hljs-string">'big'</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">0</span>:
+<span class="hljs-meta">... </span>        print(<span class="hljs-string">'positive'</span>)
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">else</span>:
+<span class="hljs-meta">... </span>        print(<span class="hljs-number">0</span>)
+<span class="hljs-meta">&gt;&gt;&gt; </span>how_big(<span class="hljs-number">7</span>)         <span class="hljs-comment"># A returned string is displayed with single quotes</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2"><span class="hljs-string">'big'</span></div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>print(how_big(<span class="hljs-number">7</span>))  <span class="hljs-comment"># A printed string has no quotes</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">big</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>how_big(<span class="hljs-number">12</span>)
+<div class="alt prompt-2">______</div><div class="solution prompt-2">huge
+positive</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>print(how_big(<span class="hljs-number">12</span>))
+<div class="alt prompt-2">______</div><div class="solution prompt-2">huge
+positive
+<span class="hljs-literal">None</span></div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>print(how_big(<span class="hljs-number">1</span>), how_big(<span class="hljs-number">0</span>))
+<div class="alt prompt-2">______</div><div class="solution prompt-2">positive
+<span class="hljs-number">0</span>
+<span class="hljs-literal">None</span> <span class="hljs-literal">None</span></div></code></pre>
+        <button id="prompt-2" class="btn btn-outline btn-lg solutiontoggle prompt">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>n = <span class="hljs-number">3</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">while</span> n &gt;= <span class="hljs-number">0</span>:
+<span class="hljs-meta">... </span>    n -= <span class="hljs-number">1</span>
+<span class="hljs-meta">... </span>    print(n)
+<div class="alt prompt-3">______</div><div class="solution prompt-3">2
+<span class="hljs-number">1</span>
+<span class="hljs-number">0</span>
+<span class="hljs-number">-1</span></div></code></pre>
+        <button id="prompt-3" class="btn btn-outline btn-lg solutiontoggle prompt">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>negative = <span class="hljs-number">-12</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">while</span> negative:  <span class="hljs-comment"># All numbers are true values except 0</span>
+<span class="hljs-meta">... </span>   <span class="hljs-keyword">if</span> negative + <span class="hljs-number">6</span>:
+<span class="hljs-meta">... </span>       print(negative)
+<span class="hljs-meta">... </span>   negative += <span class="hljs-number">3</span>
+<div class="alt prompt-4">______</div><div class="solution prompt-4"><span class="hljs-number">-12</span>
+<span class="hljs-number">-9</span>
+<span class="hljs-number">-3</span></div></code></pre>
+        <button id="prompt-4" class="btn btn-outline btn-lg solutiontoggle prompt">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h3 id="q2-debugging-quiz">Q2: Debugging Quiz</h3>
+
+
+<p>The following is a quick quiz on different debugging techniques that will be
+helpful for you to use in this class. You can refer to the
+<a href="https://web.archive.org/web/20240301065838/https://cs61a.org/articles/debugging/">debugging article</a> to answer the questions.</p>
+
+<p>Use Ok to test your understanding:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q debugging-quiz -u</code><button id="copy-code-python3ok-qdebugging-quiz-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qdebugging-quiz-u").onclick = () => copyCode('python3 ok -q debugging-quiz -u', "copy-code-python3ok-qdebugging-quiz-u");
+        </script>
+        <br>
+
+
+<h2 id="write-code">Write Code</h2>
+
+
+
+<h3 id="q3-falling-factorial">Q3: Falling Factorial</h3>
+
+
+<p>Let's write a function <code>falling</code>, which is a "falling" factorial
+that takes two arguments, <code>n</code> and <code>k</code>, and returns the product of <code>k</code>
+consecutive numbers, starting from <code>n</code> and working downwards.
+When <code>k</code> is 0, the function should return 1.</p>
+
+<solution>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">falling</span><span class="hljs-params">(n, k)</span>:</span>
+    <span class="hljs-string">"""Compute the falling factorial of n to depth k.
+
+    &gt;&gt;&gt; falling(6, 3)  # 6 * 5 * 4
+    120
+    &gt;&gt;&gt; falling(4, 3)  # 4 * 3 * 2
+    24
+    &gt;&gt;&gt; falling(4, 1)  # 4
+    4
+    &gt;&gt;&gt; falling(4, 0)
+    1
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q falling</code><button id="copy-code-python3ok-qfalling" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qfalling").onclick = () => copyCode('python3 ok -q falling', "copy-code-python3ok-qfalling");
+        </script>
+        <br>
+
+
+<h3 id="q4-divisible-by-k">Q4: Divisible By k</h3>
+
+
+<p>Write a function <code>divisible_by_k</code> that takes positive integers <code>n</code> and <code>k</code>. It prints all positive integers less than or equal to <code>n</code> that are divisible by <code>k</code> from smallest to largest. Then, it returns how many numbers were printed.</p>
+
+<solution>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">divisible_by_k</span><span class="hljs-params">(n, k)</span>:</span>
+    <span class="hljs-string">"""
+    &gt;&gt;&gt; a = divisible_by_k(10, 2)  # 2, 4, 6, 8, and 10 are divisible by 2
+    2
+    4
+    6
+    8
+    10
+    &gt;&gt;&gt; a
+    5
+    &gt;&gt;&gt; b = divisible_by_k(3, 1)  # 1, 2, and 3 are divisible by 1
+    1
+    2
+    3
+    &gt;&gt;&gt; b
+    3
+    &gt;&gt;&gt; c = divisible_by_k(6, 7)  # There are no integers up to 6 divisible by 7
+    &gt;&gt;&gt; c
+    0
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q divisible_by_k</code><button id="copy-code-python3ok-qdivisible_by_k" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qdivisible_by_k").onclick = () => copyCode('python3 ok -q divisible_by_k', "copy-code-python3ok-qdivisible_by_k");
+        </script>
+        <br>
+
+
+<h3 id="q5-sum-digits">Q5: Sum Digits</h3>
+
+
+<p>Write a function that takes in a nonnegative integer and sums its digits. (Using
+floor division and modulo might be helpful here!)</p>
+
+<solution>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sum_digits</span><span class="hljs-params">(y)</span>:</span>
+    <span class="hljs-string">"""Sum all the digits of y.
+
+    &gt;&gt;&gt; sum_digits(10) # 1 + 0 = 1
+    1
+    &gt;&gt;&gt; sum_digits(4224) # 4 + 2 + 2 + 4 = 12
+    12
+    &gt;&gt;&gt; sum_digits(1234567890)
+    45
+    &gt;&gt;&gt; a = sum_digits(123) # make sure that you are using return rather than print
+    &gt;&gt;&gt; a
+    6
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q sum_digits</code><button id="copy-code-python3ok-qsum_digits" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qsum_digits").onclick = () => copyCode('python3 ok -q sum_digits', "copy-code-python3ok-qsum_digits");
+        </script>
+        <br>
+
+
+<h2 id="syllabus-quiz">Syllabus Quiz</h2>
+
+
+
+<h3 id="q6-syllabus-quiz">Q6: Syllabus Quiz</h3>
+
+
+<p>Please fill out the <a href="https://web.archive.org/web/20240301065838/https://go.cs61a.org/syllabus-quiz">Syllabus Quiz</a>,
+which confirms your understanding of CS 61A
+<a href="https://web.archive.org/web/20240301065838/https://cs61a.org/articles/about/">course policies</a>.</p>
+
+
+<h2 id="check-your-score-locally">Check Your Score Locally</h2>
+
+<p>You can locally check your score on each question of this assignment by running</p>
+
+<pre><code class="hljs sql">python3 ok <span class="hljs-comment">--score</span></code></pre>
+
+<p><strong>This does NOT submit the assignment!</strong> When you are satisfied with your score, submit the assignment to Gradescope to receive credit for it.</p>
+
+
+<h2 id="submit">Submit</h2>
+
+
+<p>Submit this assignment by uploading any files you've edited <strong>to the appropriate Gradescope assignment.</strong> <a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab00/#submit-with-gradescope">Lab 00</a> has detailed instructions.</p>
+
+<p>In addition, all students who are <strong>not</strong> in the mega lab must complete this <a href="https://web.archive.org/web/20240301065838/https://go.cs61a.org/lab-att">attendance form</a>. Submit this form each week, whether you attend lab or missed it for a good reason. The attendance form is not required for mega section students.</p>
+
+
+<h1 id="optional-questions">Optional Questions</h1>
+
+
+<blockquote><p>These questions are optional. If you don't complete them, you will
+still receive credit for lab. They are great practice, so do them
+anyway!</p></blockquote>
+
+
+<h3 id="q7-wwpd-what-if">Q7: WWPD: What If?</h3>
+
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?" questions:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q if-statements -u</code><button id="copy-code-python3ok-qif-statements-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qif-statements-u").onclick = () => copyCode('python3 ok -q if-statements -u', "copy-code-python3ok-qif-statements-u");
+        </script>
+        <br>
+
+<p><strong>Hint</strong>: <code>print</code> (unlike <code>return</code>) does <em>not</em> cause the function to exit.</p></blockquote>
+
+<!--
+<pre><code>&gt;&gt;&gt; def so_big(x):
+...     if x &gt; 10:
+...         print(&#x27;huge&#x27;)
+...     if x &gt; 5:
+...         return &#x27;big&#x27;
+...     if x &gt; 0:
+...         print(&#x27;small&#x27;)
+...     print(&quot;nothin&#x27;&quot;)
+&gt;&gt;&gt; so_big(7)
+<div class="alt prompt-5">______</div><div class="solution prompt-5">&#x27;&#x62;&#x69;&#x67;&#x27;</div>
+&gt;&gt;&gt; so_big(12)
+<div class="alt prompt-5">______</div><div class="solution prompt-5">&#x68;&#x75;&#x67;&#x65;&#xa;&#x27;&#x62;&#x69;&#x67;&#x27;</div>
+&gt;&gt;&gt; so_big(1)
+<div class="alt prompt-5">______</div><div class="solution prompt-5">&#x73;&#x6d;&#x61;&#x6c;&#x6c;&#xa;&#x6e;&#x6f;&#x74;&#x68;&#x69;&#x6e;&#x27;</div></code></pre>
+        <button id='prompt-5' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+-->
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ab</span><span class="hljs-params">(c, d)</span>:</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> c &gt; <span class="hljs-number">5</span>:
+<span class="hljs-meta">... </span>        print(c)
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">elif</span> c &gt; <span class="hljs-number">7</span>:
+<span class="hljs-meta">... </span>        print(d)
+<span class="hljs-meta">... </span>    print(<span class="hljs-string">'foo'</span>)
+<span class="hljs-meta">&gt;&gt;&gt; </span>ab(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>)
+<div class="alt prompt-6">______</div><div class="solution prompt-6">10
+foo</div></code></pre>
+        <button id="prompt-6" class="btn btn-outline btn-lg solutiontoggle prompt">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bake</span><span class="hljs-params">(cake, make)</span>:</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> cake == <span class="hljs-number">0</span>:
+<span class="hljs-meta">... </span>        cake = cake + <span class="hljs-number">1</span>
+<span class="hljs-meta">... </span>        print(cake)
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> cake == <span class="hljs-number">1</span>:
+<span class="hljs-meta">... </span>        print(make)
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">else</span>:
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> cake
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">return</span> make
+<span class="hljs-meta">&gt;&gt;&gt; </span>bake(<span class="hljs-number">0</span>, <span class="hljs-number">29</span>)
+<div class="alt prompt-7">______</div><div class="solution prompt-7">1
+<span class="hljs-number">29</span>
+<span class="hljs-number">29</span></div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>bake(<span class="hljs-number">1</span>, <span class="hljs-string">"mashed potatoes"</span>)
+<div class="alt prompt-7">______</div><div class="solution prompt-7">mashed potatoes
+<span class="hljs-string">'mashed potatoes'</span></div></code></pre>
+        <button id="prompt-7" class="btn btn-outline btn-lg solutiontoggle prompt">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h3 id="q8-double-eights">Q8: Double Eights</h3>
+
+
+<p>Write a function that takes in a number and determines if the digits contain two
+adjacent 8s.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">double_eights</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""Return true if n has two eights in a row.
+    &gt;&gt;&gt; double_eights(8)
+    False
+    &gt;&gt;&gt; double_eights(88)
+    True
+    &gt;&gt;&gt; double_eights(2882)
+    True
+    &gt;&gt;&gt; double_eights(880088)
+    True
+    &gt;&gt;&gt; double_eights(12345)
+    False
+    &gt;&gt;&gt; double_eights(80808080)
+    False
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+<p>Use Ok to test your code:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q double_eights</code><button id="copy-code-python3ok-qdouble_eights" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-qdouble_eights").onclick = () => copyCode('python3 ok -q double_eights', "copy-code-python3ok-qdouble_eights");
+        </script>
+        <br>
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#required-questions">Required Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#review">Review</a></li>
+    <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#what-would-python-display-wwpd">What Would Python Display? (WWPD)</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#q1-wwpd-control">Q1: WWPD: Control</a></li>
+      <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#q2-debugging-quiz">Q2: Debugging Quiz</a></li>
+    </ul>
+    <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#write-code">Write Code</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#q3-falling-factorial">Q3: Falling Factorial</a></li>
+      <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#q4-divisible-by-k">Q4: Divisible By k</a></li>
+      <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#q5-sum-digits">Q5: Sum Digits</a></li>
+    </ul>
+    <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#syllabus-quiz">Syllabus Quiz</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#q6-syllabus-quiz">Q6: Syllabus Quiz</a></li>
+    </ul>
+    <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#check-your-score-locally">Check Your Score Locally</a></li>
+    <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#submit">Submit</a></li>
+  </ul>
+  <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#optional-questions">Optional Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#q7-wwpd-what-if">Q7: WWPD: What If?</a></li>
+    <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/lab/lab01/#q8-double-eights">Q8: Double Eights</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/weekly">Weekly Schedule</a></li>
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/office-hours">Office Hours</a></li>
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/staff">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/resources">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/articles/studying">Studying Guide</a></li>
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/articles/debugging">Debugging Guide</a></li>
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/articles/composition">Composition Guide</a></li>
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/articles/pair-programming">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/articles/about#assignments">Assignments</a></li>
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/articles/about#exams">Exams</a></li>
+            <li><a href="https://web.archive.org/web/20240301065838/https://cs61a.org/articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+    <script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': 'https://web.archive.org/web/20240301065838/https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: 'https://web.archive.org/web/20240301065838/https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min'
+      };
+      importScripts('https://web.archive.org/web/20240301065838/https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/jsplumb.min.js"></script>
+    <script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/network_storage.js"></script>
+    <script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/storable.js"></script>
+    <script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/editor.js"></script>
+    <script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/copy-button.js"></script>
+    <script src="./Lab 1_ Functions, Control _ CS 61A Spring 2024_files/env-diagram.js"></script>
+    
+<!-- <script src="/assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  
+
+</body></html>

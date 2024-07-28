@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/analytics.js" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app28.us.archive.org';v.server_ms=292;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/bundle-playback.js" charset="utf-8"></script>
+<script type="text/javascript" src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/wombat.js" charset="utf-8"></script>
+<script>window.RufflePlayer=window.RufflePlayer||{};window.RufflePlayer.config={"autoplay":"on","unmuteOverlay":"hidden"};</script>
+<script type="text/javascript" src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/ruffle.js"></script>
+<script type="text/javascript">
+    __wm.pc(0.001);
+    __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://cs61a.org/proj/hog/","20240301140229","https://web.archive.org/","web","https://web-static.archive.org/_static/",
+	      "1709301749");
+</script>
+<link rel="stylesheet" type="text/css" href="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/banner-styles.css">
+<link rel="stylesheet" type="text/css" href="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/iconochive.css">
+<!-- End Wayback Rewrite JS Include -->
+
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/jquery.min.js"></script>
+    <script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/jquery.ba-throttle-debounce.min.js"></script>
+    <script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/bootstrap.min.js"></script>
+    <script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/hl.js"></script>
+    <script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/toggledarkmode.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/dark-mode.js"></script>
+    <link rel="stylesheet" href="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/css">
+    <link rel="stylesheet" href="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/style.css">
+    <link rel="stylesheet" href="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/mono-blue.css">
+    <link rel="icon" href="https://web.archive.org/web/20240301140229im_/https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+<link href="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/project.css" rel="stylesheet" type="text/css">
+
+
+    <title>
+Project 1: The Game of Hog | CS 61A Spring 2024
+</title>
+  </head>
+
+  <body id="index" class="home"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display: block; direction: ltr;"><template shadowrootmode="closed"><div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;" class="">
+<div id="donato" style="position:relative;width:100%;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20240301140229/https%3A//cs61a.org/proj/hog/" scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
+  </div>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="https://web.archive.org/web/" title="Wayback Machine home page"><img src="https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-100.png, https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0"></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="https://web.archive.org/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://cs61a.org/proj/hog/" onfocus="this.focus();this.select();" style="flex:1;" autocomplete="off"><input type="hidden" name="type" value="replay"><input type="hidden" name="date" value="20240301140229"><input type="submit" value="Go">
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+                <div class="s" id="wm-nav-captures" style="flex:1;"><a class="t" href="https://web.archive.org/web/*/https://cs61a.org/proj/hog/" title="See a list of every capture for this URL">164 captures</a><div class="r" title="Timespan for captures of this URL">21 Oct 2014 - 7 Jul 2024</div></div>
+        <div class="k">
+          <a href="https://web.archive.org/web/20131101000000/https://cs61a.org/proj/hog/" id="wm-graph-anchor">
+            <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+              <canvas id="wm-sparkline-canvas" width="725" height="27" border="0"></canvas>
+            <div class="yt" style="display: none; width: 25px; height: 27px; left: 425px;"></div><div class="mt" style="display: none; width: 2px; height: 27px; left: 446px;"></div></div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+        <tbody>
+          <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+          <tr class="m">
+            <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20240105001918/https://cs61a.org/proj/hog/" title="05 Jan 2024"><strong>Jan</strong></a></td>
+            <td class="c" id="displayMonthEl" title="You are here: 14:02:29 Mar 01, 2024">Mar</td>
+            <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20240413075253/https://cs61a.org/proj/hog/" title="13 Apr 2024"><strong>Apr</strong></a></td>
+          </tr>
+          <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+          <tr class="d">
+            <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20240105001918/https://cs61a.org/proj/hog/" title="00:19:18 Jan 05, 2024"><img src="https://web-static.archive.org/_static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0"></a></td>
+            <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 14:02:29 Mar 01, 2024">01</td>
+            <td class="f" nowrap="nowrap"><a href="https://web.archive.org/web/20240413075253/https://cs61a.org/proj/hog/" title="07:52:53 Apr 13, 2024"><img src="https://web-static.archive.org/_static/images/toolbar/wm_tb_nxt_on.png" alt="Next capture" width="14" height="16" border="0"></a></td>
+          </tr>
+          <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+          <tr class="y">
+            <td class="b" nowrap="nowrap"><a href="https://web.archive.org/web/20230207214150/https://cs61a.org/proj/hog/" title="07 Feb 2023"><strong>2023</strong></a></td>
+            <td class="c" id="displayYearEl" title="You are here: 14:02:29 Mar 01, 2024">2024</td>
+            <td class="f" nowrap="nowrap">2025</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+                <span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#" title="Share via My Web Archive" style="display: none;">
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in" style="display: inline-block;">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web" style="display: none;"></span>
+        </span>
+                <a class="xxs" href="http://faq.web.archive.org/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+        <a id="wm-tb-close" href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="https://web.archive.org/web/20240301140229/http://web.archive.org/screenshot/https://cs61a.org/proj/hog/" id="wm-screenshot" title="screenshot" style="visibility: hidden;">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+        <a id="wm-share-facebook" href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#" data-url="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+        <a id="wm-share-twitter" href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#" data-url="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+        <a id="wm-expand" class="wm-btn wm-closed" href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#expand" onclick="__wm.ex(event);return false;"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
+      </div>
+    </div>
+  </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+        <div id="wm-capinfo-notice" source="api"></div>
+                <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/commoncrawl)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/commoncrawl" target="_new"><span class="wm-title">Common Crawl</span></a></div>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  Web crawl data from Common Crawl.
+	</div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="https://web-static.archive.org/_static/images/loading.gif" alt="loading"></div>
+    </div>
+    </div>
+  </div></div></div><link rel="stylesheet" type="text/css" href="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/banner-styles.css"><link rel="stylesheet" type="text/css" href="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/iconochive.css"><div class="wb-autocomplete-suggestions "></div></template>
+</div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(725,27,25,2,"web","https://cs61a.org/proj/hog/","20240301140229",1996,"https://web-static.archive.org/_static/",["https://web-static.archive.org/_static/css/banner-styles.css?v=S1zqJCYt","https://web-static.archive.org/_static/css/iconochive.css?v=qtvMKcIJ"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+ 
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://web.archive.org/web/20240301140229/https://cs61a.org/">
+            <img style="max-width:60px; margin-top: -20px;" class="logo" src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/logo.png">
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/">Home</a></li>
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/articles/about">Syllabus</a></li>
+            <li><a href="https://web.archive.org/web/20240301140229/https://edstem.org/us/courses/52971/discussion/" target="_blank">Ed</a></li>
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/office-hours">Office Hours</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/staff">TAs &amp; Tutors</a></li>
+                <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/academic-interns">Academic Interns</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Links
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a href="https://web.archive.org/web/20240301140229/https://sections.cs61a.org/">Section Selector</a></li>
+                <li><a href="https://web.archive.org/web/20240301140229/https://oh.cs61a.org/">Office Hours Queue</a></li>
+                <li><a href="https://web.archive.org/web/20240301140229/https://go.cs61a.org/extensions">Request an Extension</a></li>
+                <li><a href="https://web.archive.org/web/20240301140229/https://go.cs61a.org/regrades">Request a Regrade</a></li>
+                <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/resources/">Past Exams &amp; Sites</a></li>
+                <li><a href="https://web.archive.org/web/20240301140229/https://tutor.cs61a.org/">Python Tutor</a></li>
+                <li><a href="https://web.archive.org/web/20240301140229/https://code.cs61a.org/">Online Code Editor</a></li>
+                <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/articles/campus-res/">Department/Campus Resources</a></li>
+              </ul>
+            </li>
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/contact/">Contact</a></li>
+            <li>
+              <label class="switch">
+                <input type="checkbox" id="toggle-mode-cb">
+                <span class="slider round"></span>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Project 1: The Game of Hog
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/hog.zip" class="label label-outline">hog.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<div class="haiku">
+  <blockquote><p><img class="img-responsive center-block" src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/icon.gif" alt="5-sided die" width="" height=""></p>
+
+<cite> I know! I'll use my<br> Higher-order functions to<br> Order higher
+rolls.  </cite></blockquote>
+</div>
+
+    
+
+<h2 id="introduction">Introduction</h2>
+
+
+<blockquote><p><strong>Important submission note:</strong> For full credit:</p>
+
+<ul>
+  <li>Submit with Phase 1 complete by <strong>Tuesday, January 30</strong>, worth 1 pt.</li>
+  <li>Submit the complete project by <strong>Wednesday, February 7</strong>.</li>
+</ul>
+
+<p>Try to attempt the problems in order, as some later problems will depend on
+earlier problems in their implementation and therefore also when running <code>ok</code>
+tests.</p>
+
+<p>You may complete the project with a partner.</p>
+
+<p>You can get 1 bonus point by submitting the entire project by <strong>Tuesday, February 6</strong>.
+You can receive extensions on the project deadline and checkpoint
+deadline, but not on the early deadline, unless you're a DSP student with an
+accommodation for assignment extensions.</p></blockquote>
+
+<p>In this project, you will develop a simulator and multiple strategies for the
+dice game Hog. You will need to use <em>control statements</em> and <em>higher-order
+functions</em> together, as described in Sections 1.2 through 1.6 of <a href="https://web.archive.org/web/20240301140229/https://www.composingprograms.com/">Composing
+Programs</a>, the online textbook.</p>
+
+<blockquote><p>When students in the past have tried to implement the functions without
+thoroughly reading the problem description, they’ve often run into issues.
+😱
+<strong>Read each description thoroughly before starting to code.</strong></p></blockquote>
+
+
+<h3 id="rules">Rules</h3>
+
+
+<p>In Hog, two players alternate turns trying to be the first to end a turn with
+at least <code>GOAL</code> total points, where <code>GOAL</code> defaults to 100. On each turn, the current player chooses some number
+of dice to roll, up to 10. That player's score for the turn is the sum of the
+dice outcomes. However, a player who rolls too many dice risks:</p>
+
+<ul>
+  <li><strong>Sow Sad</strong>. If any of the dice outcomes is a 1, the current player's score
+  for the turn is <code>1</code>.</li>
+</ul>
+
+
+        <button id="toggle-1" class="btn btn-outline btn-lg alwaystoggle toggle" style="display: inline-block;">
+        Examples<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+<ul>
+  <li><em>Example 1:</em> The current player rolls 7 dice, 5 of which are 1's. They
+  score <code>1</code> point for the turn.</li>
+  <li><em>Example 2:</em> The current player rolls 4 dice, all of which are 3's. Since
+  Sow Sad did not occur, they score <code>12</code> points for the turn.</li>
+</ul>
+
+</div>
+
+<p>In a normal game of Hog, those are all the rules. To spice up the game, we'll
+include some special rules:</p>
+
+<ul>
+  <li><strong>Boar Brawl</strong>. A player who rolls zero dice scores three times
+  the absolute difference between the tens digit of the opponent’s score and
+  the ones digit of the current player’s score, or 1, whichever is higher.
+  The ones digit refers to the rightmost digit and the tens digit refers to
+  the second-rightmost digit. If a player's score is a single digit (less than
+  10), the tens digit of that player's score is 0.</li>
+</ul>
+
+
+        <button id="toggle-2" class="btn btn-outline btn-lg alwaystoggle toggle" style="display: inline-block;">
+        Examples<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+
+<ul>
+  <li><p><em>Example 1:</em></p>
+
+  <ul>
+    <li>The current player has <code>21</code> points and the opponent has <code>46</code> points, and the current player
+    chooses to roll zero dice.</li>
+    <li>The tens digit of the opponent's score is <code>4</code> and the ones digit of the current player's score is <code>1</code>.</li>
+    <li>Therefore, the player gains <code>3 * abs(4 - 1) = 9</code> points.</li>
+  </ul></li>
+  <li><p><em>Example 2:</em></p>
+
+  <ul>
+    <li>The current player has <code>45</code> points and the opponent has <code>52</code> points, and the current player
+    chooses to roll zero dice.</li>
+    <li>The tens digit of the opponent's score is <code>5</code> and the ones digit of the current player's score is <code>5</code>.</li>
+    <li>Since <code>3 * abs(5 - 5) = 0</code>, the player gains <code>1</code> point.</li>
+  </ul></li>
+  <li><p><em>Example 3:</em></p>
+
+  <ul>
+    <li>The current player has <code>2</code> points and the opponent has <code>5</code> points, and the current player
+    chooses to roll zero dice.</li>
+    <li>The tens digit of the opponent's score is <code>0</code> and the ones digit of the current player's score is <code>2</code>.</li>
+    <li>Therefore, the player gains <code>3 * abs(0 - 2) = 6</code> points.</li>
+  </ul></li>
+</ul>
+
+</div>
+
+<ul>
+  <li><strong>Sus Fuss</strong>.
+  We call a number <a href="https://web.archive.org/web/20240301140229/https://en.wikipedia.org/wiki/Sus_%28genus%29"><em>sus</em></a> if it has exactly
+  3 or 4 factors, including 1 and the number itself.
+  If, after rolling, the current player's score is a sus number, they gain enough points
+  such that their score instantly increases to the next prime number.</li>
+</ul>
+
+
+        <button id="toggle-3" class="btn btn-outline btn-lg alwaystoggle toggle" style="display: inline-block;">
+        Examples<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-3">
+
+<ul>
+  <li><p><em>Example 1:</em></p>
+
+  <ul>
+    <li>A player has 14 points and rolls 2 dice that total 7 points.
+    Their new score would be 21, which has 4 factors: 1, 3, 7, and 21.
+    Because 21 is sus, the score of the player is increased to 23, the
+    next prime number.</li>
+  </ul></li>
+  <li><p><em>Example 2:</em></p>
+
+  <ul>
+    <li>A player has 63 points and rolls 5 dice that total 1 point.
+    Their new score would be 64, which has 7 factors: 1, 2, 4, 8, 16,
+    32, and 64.
+    Since 64 is not sus, the score of the player is unchanged.</li>
+  </ul></li>
+  <li><p><em>Example 3:</em></p>
+
+  <ul>
+    <li>A player has 49 points and rolls 5 dice that total 18 points.
+    Their new score would be 67, which is prime and has 2 factors: 1 and 67.
+    Since 67 is not sus, the score of the player is unchanged.</li>
+  </ul></li>
+</ul>
+
+</div>
+
+
+<h2 id="download-starter-files">Download starter files</h2>
+
+
+<p>To get started, download all of the project code as a <a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/hog.zip">zip archive</a>.
+Below is a list of all the files you will see in the archive once unzipped.
+For the project, you'll only be making changes to <code>hog.py</code>.</p>
+
+<ul>
+  <li><code>hog.py</code>: A starter implementation of Hog</li>
+  <li><code>dice.py</code>: Functions for making and rolling dice</li>
+  <li><code>hog_gui.py</code>: A graphical user interface (GUI) for Hog (updated)</li>
+  <li><code>ucb.py</code>: Utility functions for CS 61A</li>
+  <li><code>hog_ui.py</code>: A text-based user interface (UI) for Hog</li>
+  <li><code>ok</code>: CS 61A autograder</li>
+  <li><code>tests</code>: A directory of tests used by <code>ok</code></li>
+  <li><code>gui_files</code>: A directory of various things used by the web GUI</li>
+</ul>
+
+<p>You may notice some files other than the ones listed above too—those are needed for making the autograder and portions of the GUI work. Please do not modify any files other than <code>hog.py</code>.</p>
+
+
+
+
+<h2 id="logistics">Logistics</h2>
+
+
+
+<!-- <p>Remember that you can earn an additional bonus point by submitting the
+  project at least 24 hours before the deadline.</p> -->
+
+
+
+<p>The project is worth 25 points, of which 1 point is for submitting
+Phase 1 by the checkpoint date of Tuesday, January 30.</p>
+
+
+<p>You will turn in the following files:</p>
+
+<ul>
+  <li><code>hog.py</code></li>
+</ul>
+
+<p>You do not need to modify or turn in any other files to complete the
+project. To submit the project, <b> submit the required files to the appropriate Gradescope assignment.</b></p>
+
+<p>For the functions that we ask you to complete, there may be some
+initial code that we provide. If you would rather not use that code,
+feel free to delete it and start from scratch. You may also add new
+function definitions as you see fit.</p>
+
+<p><b>However, please do not modify any other functions or edit any files not
+listed above</b>. Doing so may result in your code failing our autograder tests.
+Also, please do not change any function signatures (names, argument order, or
+number of arguments).</p>
+
+
+
+<p>Throughout this project, you should be testing the correctness of your code.
+It is good practice to test often, so that it is easy to isolate any problems.
+However, you should not be testing <i>too</i> often, to allow yourself time to
+think through problems.</p>
+
+<p>We have provided an <b>autograder</b> called <code>ok</code> to help you
+with testing your code and tracking your progress. The first time you run the
+autograder, you will be asked to <b>log in with your Ok account using your web
+browser</b>. Please do so. Each time you run <code>ok</code>, it will back up
+your work and progress on our servers.</p>
+
+<p>The primary purpose of <code>ok</code> is to test your implementations.</p>
+
+<!-- <p>First, some of the test cases are <i>locked</i>. To unlock tests, run the
+following command from your terminal:</p>
+
+<pre><code>python3 ok -u</code></pre>
+
+<p>This command will start an interactive prompt that looks like:</p>
+
+<pre>
+=====================================================================
+Assignment: The Game of Hog
+Ok, version ...
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unlocking tests
+
+At each "? ", type what you would expect the output to be.
+Type exit() to quit
+
+---------------------------------------------------------------------
+Question 0 &gt; Suite 1 &gt; Case 1
+(cases remaining: 1)
+
+&gt;&gt;&gt; Code here
+?
+</pre>
+
+<p>At the <code>?</code>, you can type what you expect the output to be. If you
+are correct, then this test case will be available the next time you run the
+autograder.</p>
+
+<p>The idea is to understand <i>conceptually</i> what your program should do
+first, before you start writing any code.</p>
+
+<p>Once you have unlocked some tests and written some code, you can check the
+correctness of your program using the tests that you have unlocked:</p>
+
+<pre>python3 ok</pre>
+
+<p>Most of the time, you will want to focus on a particular question. Use the
+<code>-q</code> option as directed in the problems below.</p>  -->
+
+<!-- <p>Second, there may be some test cases that are <i>hidden</i>. These test cases are
+<b>not</b> run by the command:</p> -->
+
+<!--<pre>python3 ok</pre>-->
+
+<!-- <p>They are only run when you submit:</p> -->
+
+<!-- <pre>python3 ok --submit</pre> -->
+
+<!-- <p> We keep test cases hidden to ensure that you write your code with the intention
+of solving the question at hand, not purely to pass the given tests. The hidden
+tests will be run when you submit your project. You will receive an email with part of
+the autograder results after submitting. However, the autograder has a 15 minute
+cooldown period. If you submit before 15 minutes have passed, the autograder will
+not run.</p> -->
+
+<!-- <p>We recommend that you submit <b>after you finish each
+problem</b>. Only your last submission will be graded. It is also useful for us
+to have more backups of your code in case you run into a submission issue. <b>If you forget to submit, your last backup will be automatically converted to a submission. </b></p>
+-->
+
+<!--<p>After you run this command, you will receive an email (to the address-->
+<!--that you used to sign up for Ok) that has the output from all <i>failed</i>-->
+<!--unlocked tests, including hidden tests, along with your score at the bottom. You-->
+<!--can continue submitting until you pass all the tests. However, you will receive-->
+<!--<b>at most one email every half hour</b>.</p>-->
+
+<!--<p>This buffer period is meant for you and your partner to try and understand-->
+<!--where your error comes from, and take some time to think through your code. We-->
+<!--encourage you to do this for all projects.</p>-->
+
+<!---
+<p>If you are trying to debug a test failure, you can launch an interactive session
+after the test is run with:</p>
+
+<pre><code>python3 ok &#x2d;q 05 &#x2d;i</code></pre>
+
+<p>This will run the tests and launch an interactive session if a test does not
+pass.</p>
+
+<pre><code>=====================================================================
+Assignment: Project 1: Hog
+Ok, version ....
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Running tests
+
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+Question ... &gt; Suite ... &gt; Case ...
+
+&gt;&gt;&gt; the_test()
+"expected value"
+
+# Error: expected
+#     "expected value"
+# but got
+#     None
+
+# Interactive console. Type exit() to quit
+&gt;&gt;&gt;</code></pre>
+-->
+
+
+<!--- <p>The <code>tests</code> folder is used to store autograder tests, so
+<b>do not modify it</b>. You may lose all your unlocking progress if you
+do. If you need to get a fresh copy, you can download the
+<a href="hog.zip">zip archive</a> and copy it over, but you
+will need to start unlocking from scratch.</p> -->
+
+<!---
+<p>If you do not want us to record a backup of your work or information about
+your progress, you can run
+
+<pre>python3 ok --local</pre>
+
+
+With this option, no information will be sent to our course
+servers.
+
+-->
+
+<p>If you want to test your code interactively, you can run
+
+</p><pre> python3 ok -q [question number] -i </pre>
+
+with the appropriate question number (e.g. <code>01</code>) inserted.
+This will run the tests for that question until the first one you failed,
+then give you a chance to test the functions you wrote interactively.<p></p>
+
+<p>You can also use the debugging print feature in OK by writing
+
+</p><pre> print("DEBUG:", x) </pre>
+
+which will produce an output in your terminal without causing OK tests to fail
+with extra output.
+
+<h2 id="graphical-user-interface">Graphical User Interface</h2>
+
+<p>A <strong>graphical user interface</strong> (GUI, for short) is provided for you. At the moment, it doesn't work because you haven't implemented the game logic. Once you complete the play function, you will be able to play a fully interactive version of Hog!</p>
+
+<p>Once you've done that, you can run the GUI from your terminal:</p>
+
+<pre><code class="hljs">python3 hog_gui.py</code></pre>
+
+
+
+
+<h2 id="getting-started-videos">Getting Started Videos</h2>
+
+
+<p>These videos may provide some helpful direction for tackling the coding
+problems on this assignment.</p>
+
+<blockquote><p>To see these videos, you should be logged into your berkeley.edu email.</p></blockquote>
+
+
+            <iframe width="560" height="315" src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/videoseries.html" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" data-ruffle-polyfilled=""></iframe><p><a href="https://web.archive.org/web/20240301140229/https://youtu.be/playlist?list=PLx38hZJ5RLZebgMROlbtGHlmAbOjDegj5"> YouTube link </a></p>
+
+
+<h2 id="phase-1-rules-of-the-game">Phase 1: Rules of the Game</h2>
+
+
+<p>In the first phase, you will develop a simulator for the game of Hog.</p>
+
+
+<h3 id="problem-0-0-pt">Problem 0 (0 pt)</h3>
+
+
+<p>The <code>dice.py</code> file represents dice using non-pure zero-argument functions.
+These functions are non-pure because they may have different return values each
+time they are called, and so a side-effect of calling the function is
+changing what will be returned when the function is called again.</p>
+
+<p>Here's the documentation from <code>dice.py</code> that you need to read in order to
+simulate dice in this project.</p>
+
+<pre><code class="hljs sql">A dice function takes no arguments and returns a number from 1 to n
+(inclusive), where n is the number of sides on the dice.
+
+Fair dice produce each possible outcome <span class="hljs-keyword">with</span> equal probability.
+Two fair dice <span class="hljs-keyword">are</span> already defined, four_sided <span class="hljs-keyword">and</span> six_sided,
+<span class="hljs-keyword">and</span> <span class="hljs-keyword">are</span> <span class="hljs-keyword">generated</span> <span class="hljs-keyword">by</span> the make_fair_dice function.
+
+<span class="hljs-keyword">Test</span> dice <span class="hljs-keyword">are</span> <span class="hljs-keyword">deterministic</span>: they <span class="hljs-keyword">always</span> cycles <span class="hljs-keyword">through</span> a <span class="hljs-keyword">fixed</span>
+<span class="hljs-keyword">sequence</span> <span class="hljs-keyword">of</span> <span class="hljs-keyword">values</span> that <span class="hljs-keyword">are</span> passed <span class="hljs-keyword">as</span> arguments.
+<span class="hljs-keyword">Test</span> dice <span class="hljs-keyword">are</span> <span class="hljs-keyword">generated</span> <span class="hljs-keyword">by</span> the make_test_dice function.
+
+<span class="hljs-keyword">def</span> make_fair_dice(sides):
+    <span class="hljs-string">"""Return a die that returns 1 to SIDES with equal chance."""</span>
+    ...
+
+four_sided = make_fair_dice(<span class="hljs-number">4</span>)
+six_sided = make_fair_dice(<span class="hljs-number">6</span>)
+
+<span class="hljs-keyword">def</span> make_test_dice(...):
+    <span class="hljs-string">"""Return a die that cycles deterministically through OUTCOMES.
+
+    &gt;&gt;&gt; dice = make_test_dice(1, 2, 3)
+    &gt;&gt;&gt; dice()
+    1
+    &gt;&gt;&gt; dice()
+    2
+    &gt;&gt;&gt; dice()
+    3
+    &gt;&gt;&gt; dice()
+    1
+    &gt;&gt;&gt; dice()
+    2</span></code></pre>
+
+
+
+<p>Check your understanding by unlocking the following tests.</p>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 00 -u</code><button id="copy-code-python3ok-q00-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q00-u").onclick = () => copyCode('python3 ok -q 00 -u', "copy-code-python3ok-q00-u");
+        </script>
+        <br>
+
+<p>You can exit the unlocker by typing <code>exit()</code>.</p>
+
+<p><strong>Typing Ctrl-C on Windows to exit out of the unlocker has been known to cause
+problems, so avoid doing so.</strong></p>
+
+
+<h3 id="problem-1-2-pt">Problem 1 (2 pt)</h3>
+
+
+<p>Implement the <code>roll_dice</code> function in <code>hog.py</code>. It takes two arguments: a
+positive integer called <code>num_rolls</code> giving the number of times to roll a die and a
+<code>dice</code> function. It returns the number of points scored by rolling the die
+that number of times in a turn: either the sum of the outcomes or 1 <em>(Sow
+Sad)</em>.</p>
+
+<ul>
+  <li><strong>Sow Sad</strong>. If any of the dice outcomes is a 1, the current player's score
+  for the turn is <code>1</code>.</li>
+</ul>
+
+
+        <button id="toggle-4" class="btn btn-outline btn-lg alwaystoggle toggle" style="display: inline-block;">
+        Examples<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-4">
+
+<ul>
+  <li><em>Example 1:</em> The current player rolls 7 dice, 5 of which are 1's. They
+  score <code>1</code> point for the turn.</li>
+  <li><em>Example 2:</em> The current player rolls 4 dice, all of which are 3's. Since
+  Sow Sad did not occur, they score <code>12</code> points for the turn.</li>
+</ul>
+
+</div>
+
+<p>To obtain a single outcome of a dice roll, call <code>dice()</code>. You should call
+<code>dice()</code> <strong>exactly <code>num_rolls</code> times</strong> in the body of <code>roll_dice</code>.</p>
+
+<p>Remember to call <code>dice()</code> exactly <code>num_rolls</code> times <strong>even if Sow Sad happens
+in the middle of rolling</strong>.  By doing so, you will correctly simulate rolling
+all the dice together (and the user interface will work correctly).</p>
+
+<blockquote><p><strong>Note:</strong> The <code>roll_dice</code> function, and many other functions throughout the
+project, makes use of <em>default argument values</em>—you can see this in the
+function heading:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">roll_dice</span><span class="hljs-params">(num_rolls, dice=six_sided)</span>:</span> ...</code></pre>
+
+<p>The argument <code>dice=six_sided</code> means that when <code>roll_dice</code> is called, the
+<code>dice</code> argument is <strong>optional</strong>. If no value for <code>dice</code> is provided, then
+<code>six_sided</code> is used by default.</p>
+
+<p>For example, calling <code>roll_dice(3, four_sided)</code>, or equivalently <code>roll_dice(3,
+dice=four_sided)</code>, simulates rolling 3 four-sided dice, while calling <code>roll_dice(3)</code>
+simulates rolling 3 six-sided dice.</p></blockquote>
+
+<p><strong>Understand the problem</strong>:</p>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 01 -u</code><button id="copy-code-python3ok-q01-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q01-u").onclick = () => copyCode('python3 ok -q 01 -u', "copy-code-python3ok-q01-u");
+        </script>
+        <br>
+
+<blockquote><p><strong>Note:</strong> You will not be able to test your code using <code>ok</code> until you unlock
+the test cases for the corresponding question.</p></blockquote>
+
+<p><strong>Write code and check your work</strong>:</p>
+
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 01</code><button id="copy-code-python3ok-q01" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q01").onclick = () => copyCode('python3 ok -q 01', "copy-code-python3ok-q01");
+        </script>
+        <br>
+
+
+        <button id="toggle-5" class="btn btn-outline btn-lg alwaystoggle toggle" style="display: inline-block;">
+        Debugging Tips<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-5">
+
+<p>Check out the <a href="https://web.archive.org/web/20240301140229/https://cs61a.org/articles/debugging/">Debugging Guide</a>!</p>
+
+
+<h4 id="debugging-tips" class="no-toc">Debugging Tips</h4>
+
+
+<p>If the tests don't pass, it's time to debug. You can observe the behavior of
+your function using Python directly. First, start the Python interpreter and
+load the <code>hog.py</code> file.</p>
+
+<pre><code class="hljs">python3 -i hog.py</code></pre>
+
+<p>Then, you can call your <code>roll_dice</code> function on any number of dice you want.</p>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>roll_dice(<span class="hljs-number">4</span>)</code></pre>
+
+<p>You will find that the previous expression may have a different result each
+time you call it, since it is simulating random dice rolls. You can also use
+test dice that fix the outcomes of the dice in advance. For example, rolling
+twice when you know that the dice will come up 3 and 4 should give a total
+outcome of 7.</p>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>fixed_dice = make_test_dice(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)
+<span class="hljs-meta">&gt;&gt;&gt; </span>roll_dice(<span class="hljs-number">2</span>, fixed_dice)
+<span class="hljs-number">7</span></code></pre>
+
+<blockquote><p>On most systems, you can evaluate the same expression again by pressing the
+up arrow, then pressing enter or return. To evaluate earlier commands, press
+the up arrow repeatedly.</p>
+
+<p>If you find a problem, you first need to change your <code>hog.py</code> file to fix the
+problem, and save the file. Then, to check whether your fix works, you'll
+have to quit the Python interpreter by either using <code>exit()</code> or <code>Ctrl^D</code>, and
+re-run the interpreter to test the changes you made. Pressing the up arrow in
+both the terminal and the Python interpreter should give you access to your
+previous expressions, even after restarting Python.</p>
+
+<p>Continue debugging your code and running the <code>ok</code> tests until they all pass.</p>
+
+<p>One more debugging tip: to start the interactive interpreter automatically
+upon failing an <code>ok</code> test, use <code>-i</code>. For example, <code>python3 ok -q 01 -i</code> will
+run the tests for question 1, then start an interactive interpreter with
+<code>hog.py</code> loaded if a test fails.</p></blockquote>
+
+</div>
+
+
+<h3 id="problem-2-2-pt">Problem 2 (2 pt)</h3>
+
+
+<p>Implement <code>boar_brawl</code>, which takes the player's current score <code>player_score</code> and the
+opponent's current score <code>opponent_score</code>, and returns the number of points scored by
+Boar Brawl when the player rolls 0 dice.</p>
+
+<ul>
+  <li><strong>Boar Brawl</strong>. A player who rolls zero dice scores three times
+  the absolute difference between the tens digit of the opponent’s score and
+  the ones digit of the current player’s score, or 1, whichever is higher.
+  The ones digit refers to the rightmost digit and the tens digit refers to
+  the second-rightmost digit. If a player's score is a single digit (less than
+  10), the tens digit of that player's score is 0.</li>
+</ul>
+
+
+        <button id="toggle-6" class="btn btn-outline btn-lg alwaystoggle toggle" style="display: inline-block;">
+        Examples<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-6">
+
+<ul>
+  <li><p><em>Example 1:</em></p>
+
+  <ul>
+    <li>The current player has <code>21</code> points and the opponent has <code>46</code> points, and the current player
+    chooses to roll zero dice.</li>
+    <li>The tens digit of the opponent's score is <code>4</code> and the ones digit of the current player's score is <code>1</code>.</li>
+    <li>Therefore, the player gains <code>3 * abs(4 - 1) = 9</code> points.</li>
+  </ul></li>
+  <li><p><em>Example 2:</em></p>
+
+  <ul>
+    <li>The current player has <code>45</code> points and the opponent has <code>52</code> points, and the current player
+    chooses to roll zero dice.</li>
+    <li>The tens digit of the opponent's score is <code>5</code> and the ones digit of the current player's score is <code>5</code>.</li>
+    <li>Since <code>3 * abs(5 - 5) = 0</code>, the player gains <code>1</code> point.</li>
+  </ul></li>
+  <li><p><em>Example 3:</em></p>
+
+  <ul>
+    <li>The current player has <code>2</code> points and the opponent has <code>5</code> points, and the current player
+    chooses to roll zero dice.</li>
+    <li>The tens digit of the opponent's score is <code>0</code> and the ones digit of the current player's score is <code>2</code>.</li>
+    <li>Therefore, the player gains <code>3 * abs(0 - 2) = 6</code> points.</li>
+  </ul></li>
+</ul>
+
+</div>
+
+<blockquote><p>Don't assume that scores are below 100. Write your <code>boar_brawl</code> function so
+that it works correctly for any non-negative score.</p></blockquote>
+
+<!-- separate block quotes -->
+
+<blockquote><p><strong>Important:</strong> Your implementation should <strong>not</strong> use <code>str</code>, lists, or
+contain square brackets <code>[</code> <code>]</code>.  The test cases will check if those have
+been used.</p></blockquote>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 02 -u</code><button id="copy-code-python3ok-q02-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q02-u").onclick = () => copyCode('python3 ok -q 02 -u', "copy-code-python3ok-q02-u");
+        </script>
+        <br> <p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 02</code><button id="copy-code-python3ok-q02" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q02").onclick = () => copyCode('python3 ok -q 02', "copy-code-python3ok-q02");
+        </script>
+        <br>
+
+<p>You can also test <code>boar_brawl</code> interactively by running <code>python3 -i hog.py</code>
+from the terminal and calling <code>boar_brawl</code> on various inputs.</p>
+
+
+<h3 id="problem-3-2-pt">Problem 3 (2 pt)</h3>
+
+
+<p>Implement the <code>take_turn</code> function, which returns the number of points scored
+for a turn by rolling the given <code>dice</code> <code>num_rolls</code> times.</p>
+
+<p>Your implementation of <code>take_turn</code> should call both <code>roll_dice</code> and
+<code>boar_brawl</code> rather than repeating their implementations.</p>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 03 -u</code><button id="copy-code-python3ok-q03-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q03-u").onclick = () => copyCode('python3 ok -q 03 -u', "copy-code-python3ok-q03-u");
+        </script>
+        <br> <p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 03</code><button id="copy-code-python3ok-q03" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q03").onclick = () => copyCode('python3 ok -q 03', "copy-code-python3ok-q03");
+        </script>
+        <br>
+
+<br>
+
+
+<h3 id="problem-4-2-pt">Problem 4 (2 pt)</h3>
+
+
+<p>First, implement <code>num_factors</code>, which takes in a positive integer <code>n</code> and determines the number
+of factors that <code>n</code> has.</p>
+
+<blockquote><p>1 and <code>n</code> are both factors of <code>n</code>!</p></blockquote>
+
+<p>After, implement <code>sus_points</code> and <code>sus_update</code>.</p>
+
+<ul>
+  <li><code>sus_points</code> takes in a player's score and returns the player's
+  new score after applying the Sus Fuss rule (for example, <code>sus_points(5)</code> should
+  return <code>5</code> and <code>sus_points(21)</code> should return <code>23</code>). You should use <code>num_factors</code>
+  and the provided <code>is_prime</code> function in your implementation.</li>
+  <li><code>sus_update</code> returns a player's total score after they roll <code>num_rolls</code> dice, taking
+  both Boar Brawl and Sus Fuss into account. You should use <code>sus_points</code> in
+  this function.</li>
+</ul>
+
+<blockquote><p><strong>Hint:</strong> You can look at the implementation of <code>simple_update</code> provided in <code>hog.py</code> and use that
+  as a starting point for your <code>sus_update</code> function.</p></blockquote>
+
+<ul>
+  <li><strong>Sus Fuss</strong>.
+  We call a number <a href="https://web.archive.org/web/20240301140229/https://en.wikipedia.org/wiki/Sus_%28genus%29"><em>sus</em></a> if it has exactly
+  3 or 4 factors, including 1 and the number itself.
+  If, after rolling, the current player's score is a sus number, they gain enough points
+  such that their score instantly increases to the next prime number.</li>
+</ul>
+
+
+        <button id="toggle-7" class="btn btn-outline btn-lg alwaystoggle toggle" style="display: inline-block;">
+        Examples<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-7">
+
+<ul>
+  <li><p><em>Example 1:</em></p>
+
+  <ul>
+    <li>A player has 14 points and rolls 2 dice that total 7 points.
+    Their new score would be 21, which has 4 factors: 1, 3, 7, and 21.
+    Because 21 is sus, the score of the player is increased to 23, the
+    next prime number.</li>
+  </ul></li>
+  <li><p><em>Example 2:</em></p>
+
+  <ul>
+    <li>A player has 63 points and rolls 5 dice that total 1 point.
+    Their new score would be 64, which has 7 factors: 1, 2, 4, 8, 16,
+    32, and 64.
+    Since 64 is not sus, the score of the player is unchanged.</li>
+  </ul></li>
+  <li><p><em>Example 3:</em></p>
+
+  <ul>
+    <li>A player has 49 points and rolls 5 dice that total 18 points.
+    Their new score would be 67, which is prime and has 2 factors: 1 and 67.
+    Since 67 is not sus, the score of the player is unchanged.</li>
+  </ul></li>
+</ul>
+
+</div>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 04 -u</code><button id="copy-code-python3ok-q04-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q04-u").onclick = () => copyCode('python3 ok -q 04 -u', "copy-code-python3ok-q04-u");
+        </script>
+        <br> <p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 04</code><button id="copy-code-python3ok-q04" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q04").onclick = () => copyCode('python3 ok -q 04', "copy-code-python3ok-q04");
+        </script>
+        <br>
+
+
+<h3 id="problem-5-4-pt">Problem 5 (4 pt)</h3>
+
+
+<p>Implement the <code>play</code> function, which simulates a full game of Hog. Players take
+turns rolling dice until one of the players reaches the <code>goal</code> score, and the
+final scores of both players are returned by the function.</p>
+
+<p>To determine how many dice are rolled each turn, call the current player's
+strategy function (Player 0 uses <code>strategy0</code> and Player 1 uses <code>strategy1</code>). A
+<em>strategy</em> is a function that, given a player's score and their opponent's
+score, returns the number of dice that the current player will roll in the
+turn. An example strategy is <code>always_roll_5</code> which appears above <code>play</code>.</p>
+
+<p>To determine the updated score for a player after they take a turn, call the
+<code>update</code> function. An <code>update</code> function takes the number
+of dice to roll, the current player's score, the opponent's score, and the
+dice function used to simulate rolling dice. It returns the updated score
+of the current player after they take their turn. Two examples of <code>update</code> functions
+are <code>simple_update</code> and<code>sus_update</code>.</p>
+
+<p>If a player achieves the goal score by the end of their turn, i.e. after all
+applicable rules have been applied, the game ends. <code>play</code> will then return the
+final total scores of both players, with Player 0's score first and Player 1's
+score second.</p>
+
+<p>Some example calls to <code>play</code> are:</p>
+
+<ul>
+  <li><code>play(always_roll_5, always_roll_5, simple_update)</code> simulates two players
+  that both always roll 5 dice each turn, playing with just the Sow Sad and Boar
+  Brawl rules.</li>
+  <li><code>play(always_roll_5, always_roll_5, sus_update)</code> simulates two players
+  that both always roll 5 dice each turn, playing with the Sus Fuss rule in
+  addition to the Sow Sad and Boar Brawl rules (i.e. all the rules).</li>
+</ul>
+
+<blockquote><p><strong>Important:</strong> For the user interface to work, a strategy function should be
+called only once per turn.  Only call <code>strategy0</code> when it is Player 0's turn
+and only call <code>strategy1</code> when it is Player 1's turn.</p>
+
+<p><strong>Hints</strong>:</p>
+
+<ul>
+  <li>If <code>who</code> is the current player, the next player is <code>1 - who</code>.</li>
+  <li>To call <code>play(always_roll_5, always_roll_5, sus_update)</code> and print out
+  what happens each turn, run <code>python3 hog_ui.py</code> from the terminal.</li>
+</ul></blockquote>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 05 -u</code><button id="copy-code-python3ok-q05-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q05-u").onclick = () => copyCode('python3 ok -q 05 -u', "copy-code-python3ok-q05-u");
+        </script>
+        <br> <p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 05</code><button id="copy-code-python3ok-q05" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q05").onclick = () => copyCode('python3 ok -q 05', "copy-code-python3ok-q05");
+        </script>
+        <br>
+
+<p>Check to make sure that you completed all the problems in Phase 1:</p>
+
+<pre><code class="hljs sql">python3 ok <span class="hljs-comment">--score</span></code></pre>
+
+<p>Then, submit your work <strong>to Gradescope</strong> before the checkpoint deadline:</p>
+
+<p>When you run <code>ok</code> commands, you'll still see that some tests are locked
+because you haven't completed the whole project yet. You'll get full credit for
+the checkpoint if you complete all the problems up to this point.</p>
+
+<p><strong>Congratulations! You have finished Phase 1 of this project!</strong></p>
+
+<br>
+
+
+<h2 id="interlude-user-interfaces">Interlude: User Interfaces</h2>
+
+
+<blockquote><p>There are no required problems in this section of the project, just some
+examples for you to read and understand. See Phase 2 for the remaining
+project problems.</p></blockquote>
+
+
+<h3 id="printing-game-events">Printing Game Events</h3>
+
+
+<p>We have built a simulator for the game, but haven't added any code to describe
+how the game events should be displayed to a person. Therefore, we've built a
+computer game that no one can play. (Lame!)</p>
+
+<p>However, the simulator is expressed in terms of small functions, and we can
+replace each function by a version that prints out what happens when it is
+called. Using higher-order functions, we can do so without changing much of our
+original code.  An example appears in <code>hog_ui.py</code>, which you are encouraged to
+read.</p>
+
+<p>The <code>play_and_print</code> function calls the same <code>play</code> function just implemented,
+but using:</p>
+
+<ul>
+  <li>new strategy functions (e.g., <code>printing_strategy(0, always_roll_5)</code>) that
+  print out the scores and number of dice rolled.</li>
+  <li>a new update function (<code>sus_update_and_print</code>) that prints the outcome of
+  each turn.</li>
+  <li>a new dice function (<code>printing_dice(six_sided)</code>) that prints the outcome of
+  rolling the dice.</li>
+</ul>
+
+<p>Notice how much of the original simulator code can be reused.</p>
+
+<p>Running <code>python3 hog_ui.py</code> from the terminal calls
+<code>play_and_print(always_roll_5, always_roll_5)</code>.</p>
+
+
+<h3 id="accepting-user-input">Accepting User Input</h3>
+
+
+<p>The built-in <code>input</code> function waits for the user to type a line of text and
+then returns that text as a string. The built-in <code>int</code> function can take a
+string containing the digits of an integer and return that integer.</p>
+
+<p>The <code>interactive_strategy</code> function returns a strategy that let's a person
+choose how many dice to roll each turn by calling <code>input</code>.</p>
+
+<p>With this strategy, we can finally play a game using our <code>play</code> function:</p>
+
+<p>Running <code>python3 hog_ui.py -n 1</code> from the terminal calls
+<code>play_and_print(interactive_strategy(0), always_roll_5)</code>, which plays a game
+betweem a human (Player 0) and a computer strategy that always rolls 5.</p>
+
+<p>Running <code>python3 hog_ui.py -n 2</code> from the terminal calls
+<code>play_and_print(interactive_strategy(0), interactive_strategy(1))</code>, which plays
+a game between two human players.</p>
+
+<p>You are welcome to change <code>hog_ui.py</code> in any way you want, for example to use
+different strategies than <code>always_roll_5</code>.</p>
+
+
+<h3 id="graphical-user-interface-gui">Graphical User Interface (GUI)</h3>
+
+
+<p>We have also provided a web-based graphical user interface for the game using a similar approach as <code>hog_ui.py</code> called <code>hog_gui.py</code>. You can run it from the terminal:</p>
+
+<pre><code class="hljs">python3 hog_gui.py</code></pre>
+
+<p>Like <code>hog_ui.py</code>, the GUI relies on your simulator implementation, so if you have any bugs in your code, they will be reflected in the GUI. This means you can also use the GUI as a debugging tool; however, it's better to run the tests first.</p>
+
+<p>The source code for the Hog GUI is <a href="https://web.archive.org/web/20240301140229/https://github.com/Cal-CS-61A-Staff/cs61a-apps/tree/master/hog">publicly available on Github</a> but involves several other programming languages: Javascript, HTML, and CSS.</p>
+
+<br>
+
+
+<h2 id="phase-2-strategies">Phase 2: Strategies</h2>
+
+
+<p>In this phase, you will experiment with ways to improve upon the basic
+strategy of always rolling five dice. A <em>strategy</em> is a function that
+takes two arguments: the current player's score and their opponent's score. It
+returns the number of dice the player will roll, which can be from 0 to 10
+(inclusive).</p>
+
+
+<h3 id="problem-6-2-pt">Problem 6 (2 pt)</h3>
+
+
+<p>Implement <code>always_roll</code>, a higher-order function that takes a number of dice
+<code>n</code> and returns a strategy that always rolls <code>n</code> dice. Thus, <code>always_roll(5)</code>
+would be equivalent to <code>always_roll_5</code>.</p>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 06 -u</code><button id="copy-code-python3ok-q06-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q06-u").onclick = () => copyCode('python3 ok -q 06 -u', "copy-code-python3ok-q06-u");
+        </script>
+        <br>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 06</code><button id="copy-code-python3ok-q06" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q06").onclick = () => copyCode('python3 ok -q 06', "copy-code-python3ok-q06");
+        </script>
+        <br>
+
+
+<h3 id="problem-7-2-pt">Problem 7 (2 pt)</h3>
+
+
+<p>A strategy only has a fixed number of possible argument values. For example, in a game to
+100, there are 100 possible <code>score</code> values (0-99) and 100 possible
+<code>opponent_score</code> values (0-99), giving 10,000 possible argument combinations.</p>
+
+<p>Implement <code>is_always_roll</code>, which takes a strategy and returns whether that
+strategy always rolls the same number of dice for every possible argument
+combination up to <code>goal</code> points.</p>
+
+<blockquote><p><strong>Reminder:</strong> The game continues until one player reaches <code>goal</code> points (in
+the above example, <code>goal</code> is set to <code>100</code>). Make sure your solution accounts
+for every possible combination for the specified <code>goal</code> argument.</p></blockquote>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 07 -u</code><button id="copy-code-python3ok-q07-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q07-u").onclick = () => copyCode('python3 ok -q 07 -u', "copy-code-python3ok-q07-u");
+        </script>
+        <br>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 07</code><button id="copy-code-python3ok-q07" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q07").onclick = () => copyCode('python3 ok -q 07', "copy-code-python3ok-q07");
+        </script>
+        <br>
+
+
+<h3 id="problem-8-2-pt">Problem 8 (2 pt)</h3>
+
+
+<p>Implement <code>make_averaged</code>, which is a higher-order function that
+takes a function <code>original_function</code> as an argument.</p>
+
+<p>The return value of <code>make_averaged</code> is a function that takes in the same
+number of arguments as <code>original_function</code>. When we call this returned function
+on the arguments, it will return the average value of repeatedly calling
+<code>original_function</code> on the arguments passed in.</p>
+
+<p>Specifically, this function should call <code>original_function</code> a total of
+<code>samples_count</code> times and return the average of the results of these calls.</p>
+
+<blockquote><p><strong>Important:</strong>
+To implement this function, you will need to use a new piece of Python syntax.
+We would like to write a function that accepts an arbitrary number of arguments,
+and then calls another function using exactly those arguments. Here's how
+it works.</p>
+
+<p>Instead of listing formal parameters for a function, you can write <code>*args</code>,
+which represents all of the <strong>arg</strong>ument<strong>s</strong> that get passed into the
+function. We can then call another function with these same arguments by
+passing these <code>*args</code> into this other function. For example:</p>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">printed</span><span class="hljs-params">(f)</span>:</span>
+<span class="hljs-meta">... </span>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print_and_return</span><span class="hljs-params">(*args)</span>:</span>
+<span class="hljs-meta">... </span>        result = f(*args)
+<span class="hljs-meta">... </span>        print(<span class="hljs-string">'Result:'</span>, result)
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> result
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">return</span> print_and_return
+<span class="hljs-meta">&gt;&gt;&gt; </span>printed_pow = printed(pow)
+<span class="hljs-meta">&gt;&gt;&gt; </span>printed_pow(<span class="hljs-number">2</span>, <span class="hljs-number">8</span>)
+Result: <span class="hljs-number">256</span>
+<span class="hljs-number">256</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>printed_abs = printed(abs)
+<span class="hljs-meta">&gt;&gt;&gt; </span>printed_abs(<span class="hljs-number">-10</span>)
+Result: <span class="hljs-number">10</span>
+<span class="hljs-number">10</span></code></pre>
+
+<p>Here, we can pass any number of arguments into <code>print_and_return</code> via the
+<code>*args</code> syntax. We can also use <code>*args</code> inside our <code>print_and_return</code>
+function to make another function call with the same arguments.</p></blockquote>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 08 -u</code><button id="copy-code-python3ok-q08-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q08-u").onclick = () => copyCode('python3 ok -q 08 -u', "copy-code-python3ok-q08-u");
+        </script>
+        <br>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 08</code><button id="copy-code-python3ok-q08" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q08").onclick = () => copyCode('python3 ok -q 08', "copy-code-python3ok-q08");
+        </script>
+        <br>
+
+
+<h3 id="problem-9-2-pt">Problem 9 (2 pt)</h3>
+
+
+<p>Implement <code>max_scoring_num_rolls</code>, which runs an experiment to
+determine the number of rolls (from 1 to 10) that gives the maximum average
+score for a turn. Your implementation should use <code>make_averaged</code> and
+<code>roll_dice</code>.</p>
+
+<p>If two numbers of rolls are tied for the maximum average score, return the
+lower number. For example, if both 3 and 6 achieve a maximum average score,
+return 3.</p>
+
+<p>You might find it useful to read the doctest and the example shown in the doctest
+for this problem before doing the unlocking test.</p>
+
+<blockquote><p><strong>Important:</strong> In order to pass all of our tests, please make sure that you are
+testing dice rolls starting from 1 going up to 10, rather than from 10 to 1.</p></blockquote>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 09 -u</code><button id="copy-code-python3ok-q09-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q09-u").onclick = () => copyCode('python3 ok -q 09 -u', "copy-code-python3ok-q09-u");
+        </script>
+        <br>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 09</code><button id="copy-code-python3ok-q09" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q09").onclick = () => copyCode('python3 ok -q 09', "copy-code-python3ok-q09");
+        </script>
+        <br>
+
+
+<h3 id="running-experiments">Running Experiments</h3>
+
+
+<p>The provided <code>run_experiments</code> function calls
+<code>max_scoring_num_rolls(six_sided)</code> and prints the result. You will likely find
+that rolling 6 dice maximizes the result of <code>roll_dice</code> using six-sided dice.</p>
+
+<p>To call this function and see the result, run <code>hog.py</code> with the <code>-r</code> flag:</p>
+
+<pre><code class="hljs">python3 hog.py -r</code></pre>
+
+<p>In addition, <code>run_experiments</code> compares various strategies to <code>always_roll(6)</code>.
+You are welcome to change the implementation of <code>run_experiments</code> as you wish.
+Note that running experiments with <code>boar_strategy</code> and <code>sus_strategy</code> will not
+have accurate results until you implement them in the next two problems.</p>
+
+<p>Some of the experiments may take up to a minute to run. You can always reduce
+the number of trials in your call to <code>make_averaged</code> to speed up experiments.</p>
+
+<p>Running experiments won't affect your score on the project.</p>
+
+<br>
+
+
+<h3 id="problem-10-2-pt">Problem 10 (2 pt)</h3>
+
+
+<p>A strategy can try to take advantage of the <em>Boar Brawl</em> rule by rolling 0 when
+it is most beneficial to do so. Implement <code>boar_strategy</code>, which returns 0
+whenever rolling 0 would give <strong>at least</strong> <code>threshold</code> points and returns
+<code>num_rolls</code> otherwise. This strategy should <strong>not</strong> also take into account
+the Sus Fuss rule.</p>
+
+<blockquote><p><strong>Hint</strong>: You can use the <code>boar_brawl</code> function you defined in Problem 2.</p></blockquote>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 10 -u</code><button id="copy-code-python3ok-q10-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q10-u").onclick = () => copyCode('python3 ok -q 10 -u', "copy-code-python3ok-q10-u");
+        </script>
+        <br>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 10</code><button id="copy-code-python3ok-q10" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q10").onclick = () => copyCode('python3 ok -q 10', "copy-code-python3ok-q10");
+        </script>
+        <br>
+
+<p>You should find that running <code>python3 hog.py -r</code> now shows a win rate for
+<code>boar_strategy</code> close to 66-67%.</p>
+
+
+<h3 id="problem-11-2-pt">Problem 11 (2 pt)</h3>
+
+
+<p>A better strategy will take advantage of both <em>Boar Brawl</em> and <em>Sus Fuss</em> in
+combination.
+For example, if a player has 53 points and their opponent has 60, rolling 0
+would bring them to 62, which is a sus number, and so they would end the
+turn with 67 points: a gain of 67 - 53 = 14!</p>
+
+<p>The <code>sus_strategy</code> returns 0 whenever rolling 0 would result in a score that
+is <strong>at least</strong> <code>threshold</code> points more than the player's score at the
+start of turn.</p>
+
+<blockquote><p><strong>Hint</strong>: You can use the <code>sus_update</code> function.</p></blockquote>
+
+<p>Before writing any code, unlock the tests to verify your understanding of the question:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 11 -u</code><button id="copy-code-python3ok-q11-u" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q11-u").onclick = () => copyCode('python3 ok -q 11 -u', "copy-code-python3ok-q11-u");
+        </script>
+        <br>
+<p>Once you are done unlocking, begin implementing your solution. You can check your correctness with:</p><pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 11</code><button id="copy-code-python3ok-q11" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q11").onclick = () => copyCode('python3 ok -q 11', "copy-code-python3ok-q11");
+        </script>
+        <br>
+
+<p>You should find that running <code>python3 hog.py -r</code> now shows a win rate for
+<code>sus_strategy</code> close to 67-69%.</p>
+
+
+<h3 id="optional-problem-12-0-pt">Optional: Problem 12 (0 pt)</h3>
+
+
+<p>Implement <code>final_strategy</code>, which combines these ideas and any other ideas you
+have to achieve a high win rate against the baseline strategy. Some
+suggestions:</p>
+
+<ul>
+  <li>If you know the goal score (by default it is 100), there's no benefit to
+  scoring more than the goal. Check whether you can win by rolling 0, 1 or 2
+  dice. If you are in the lead, you might decide to take fewer risks.</li>
+  <li>Instead of using a threshold, roll 0 whenever it would give you more points
+  on average than rolling 6.</li>
+</ul>
+
+<p>You can check that your final strategy is valid by running <code>ok</code>.</p>
+
+<pre style="margin-bottom:0;"><code class="nohighlight">python3 ok -q 12</code><button id="copy-code-python3ok-q12" class="inline-copy-button"><code class="nohighlight"><div class="copy-tooltip"><span>Copy</span></div>✂️</code></button></pre>
+        <script>
+        document.getElementById("copy-code-python3ok-q12").onclick = () => copyCode('python3 ok -q 12', "copy-code-python3ok-q12");
+        </script>
+        <br>
+
+
+<h2 id="project-submission">Project submission</h2>
+
+
+<p>Run <code>ok</code> on all problems to make sure all tests are unlocked and pass:</p>
+
+<pre><code class="hljs">python3 ok</code></pre>
+
+<p>You can also check your score on each part of the project:</p>
+
+<pre><code class="hljs sql">python3 ok <span class="hljs-comment">--score</span></code></pre>
+
+<p>Once you are satisfied, submit this assignment by uploading <code>hog.py</code> <strong>to Gradescope.</strong> For a refresher on how to do this, refer to <a href="https://web.archive.org/web/20240301140229/https://cs61a.org/lab/lab00/#task-c-submitting-the-assignment">Lab 00</a>.</p>
+
+<p>You can add a partner to your Gradescope submission by clicking on <strong>+ Add Group Member</strong> under your name on the right hand side of your submission. Only one partner needs to submit to Gradescope.</p>
+
+<p><strong>Congratulations, you have reached the end of your first CS 61A project!</strong>
+If you haven't already, relax and enjoy a few games of Hog with a friend.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+You will also be able to check your exact final win rate by running:
+
+<pre><code>python3 calc.py</code></pre>
+
+This should pop up a window asking for you to confirm your identity, and then
+it will print out a win rate for your final strategy.
+-->
+
+<script>
+/*
+This code is duplicated in lab-check-in.html. Doesn't work if we move it to a separate
+file because of JQuery document ready concurrency issues.
+*/
+$(function() {
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+});
+</script>
+
+<script>
+$("#cats_typing").hover(
+  function() {
+    $("#cats_typing").attr("src", "images/cats_typing.gif");
+  },
+  function() {
+    $("#cats_typing").attr("src", "images/cats_typing_still.gif");
+  }
+);
+</script>
+
+
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#introduction">Introduction</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#rules">Rules</a></li>
+  </ul>
+  <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#download-starter-files">Download starter files</a></li>
+  <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#logistics">Logistics</a></li>
+  <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#graphical-user-interface">Graphical User Interface</a></li>
+  <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#getting-started-videos">Getting Started Videos</a></li>
+  <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#phase-1-rules-of-the-game">Phase 1: Rules of the Game</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#problem-0-0-pt">Problem 0 (0 pt)</a></li>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#problem-1-2-pt">Problem 1 (2 pt)</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#debugging-tips">Debugging Tips</a></li>
+    </ul>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#problem-2-2-pt">Problem 2 (2 pt)</a></li>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#problem-3-2-pt">Problem 3 (2 pt)</a></li>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#problem-4-2-pt">Problem 4 (2 pt)</a></li>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#problem-5-4-pt">Problem 5 (4 pt)</a></li>
+  </ul>
+  <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#interlude-user-interfaces">Interlude: User Interfaces</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#printing-game-events">Printing Game Events</a></li>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#accepting-user-input">Accepting User Input</a></li>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#graphical-user-interface-gui">Graphical User Interface (GUI)</a></li>
+  </ul>
+  <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#phase-2-strategies">Phase 2: Strategies</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#problem-6-2-pt">Problem 6 (2 pt)</a></li>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#problem-7-2-pt">Problem 7 (2 pt)</a></li>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#problem-8-2-pt">Problem 8 (2 pt)</a></li>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#problem-9-2-pt">Problem 9 (2 pt)</a></li>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#running-experiments">Running Experiments</a></li>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#problem-10-2-pt">Problem 10 (2 pt)</a></li>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#problem-11-2-pt">Problem 11 (2 pt)</a></li>
+    <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#optional-problem-12-0-pt">Optional: Problem 12 (0 pt)</a></li>
+  </ul>
+  <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/proj/hog/#project-submission">Project submission</a></li>
+  
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/weekly">Weekly Schedule</a></li>
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/office-hours">Office Hours</a></li>
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/staff">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/resources">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/articles/studying">Studying Guide</a></li>
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/articles/debugging">Debugging Guide</a></li>
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/articles/composition">Composition Guide</a></li>
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/articles/pair-programming">Pair Programming</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/articles/about">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/articles/about#assignments">Assignments</a></li>
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/articles/about#exams">Exams</a></li>
+            <li><a href="https://web.archive.org/web/20240301140229/https://cs61a.org/articles/about#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+    <script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/loader.min.js"></script>
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/editor.main.min.css">
+  <script>
+      require.config({ paths: { 'vs': 'https://web.archive.org/web/20240301140229/https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs' }});
+      window.MonacoEnvironment = { getWorkerUrl: () => URL.createObjectURL(new Blob([`
+      self.MonacoEnvironment = {
+          baseUrl: 'https://web.archive.org/web/20240301140229/https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min'
+      };
+      importScripts('https://web.archive.org/web/20240301140229/https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.20.0/min/vs/base/worker/workerMain.min.js');
+  `], { type: 'text/javascript' }))
+  };
+  </script>
+    <script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/jsplumb.min.js"></script>
+    <script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/network_storage.js"></script>
+    <script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/storable.js"></script>
+    <script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/editor.js"></script>
+    <script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/copy-button.js"></script>
+    <script src="./Project 1_ The Game of Hog _ CS 61A Spring 2024_files/env-diagram.js"></script>
+    
+<!-- <script src="/assets/js/sketchy.js"></script> -->
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      event.preventDefault();
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    }
+  });
+</script>
+
+  
+
+</body></html>
